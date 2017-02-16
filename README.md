@@ -31,6 +31,6 @@ You can choose the following units instead:
 I use this to get the current internal temperature, have a look at the API docs and you can also add the set temperature and other data if you want.  
 
 ## JointSpace
-The documentation should walk you through how to use this. I use the ambilight state to detect if the TV is on - if you don't have an ambilight TV, you can use something else to detect the state of the TV.  
+The documentation should walk you through how to use this. I use the ambilight state to detect if the TV is on - if you don't have an ambilight TV, you can use something else to detect the state of the TV. (I eventually plan on using the ambilight data to change the colour of the hue bulbs, which is why I'm using that).  
 
 The API does not work if the TV if off or on standby, so you could use that instead.  
