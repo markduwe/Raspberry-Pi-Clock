@@ -12,7 +12,7 @@ It uses the Philips hue API, DarkSky API, the tadoº API and the JointSpace API.
 * JointSpace docs: http://jointspace.sourceforge.net
 
 ## Philips hue
-You'll need to create a user on the hue Debug Tool by following the insturctions here: https://developers.meethue.com/documentation/getting-started
+You'll need to create a user on the hue Debug Tool by following the instructions here: https://developers.meethue.com/documentation/getting-started  
 Copy the user ID and add it where you see "YOURHUEUSERID".  
 
 Then find your hue groups - you can add as many as you like, but I just wanted to turn all light and bedroom lights on and off as this is a bedside clock).  
@@ -22,7 +22,7 @@ My bedroom light group is 2, the "all lights" group is 0.
 Since I'm in the UK, I use the "uk2" DarkSky API units.  
 You can choose the following units instead:  
 * auto: automatically select units based on geographic location
-* ca: same as si, except that windSpeed is in kilometers per hour
+* ca: same as si, except that windSpeed is in kilometres per hour
 * uk2: same as si, except that nearestStormDistance and visibility are in miles and windSpeed is in miles per hour
 * us: Imperial units (the default)
 * si: SI units
