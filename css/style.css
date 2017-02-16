@@ -1,0 +1,82 @@
+body {
+	width: 800px;
+	height: 480px;
+	background: #fff;
+	margin: 0;
+	padding: 0;
+	font-family: 'Roboto',Arial,Helvetica,sans-serif;
+	color: #111;
+	overflow: hidden;
+	-webkit-transition: all linear 30s;
+	-moz-transition: all linear 30s;
+	transition: all linear 30s;
+}
+body.day {
+	background: #fff!important;
+	color: #111!important;
+}
+body.night {
+	background: #000!important;
+	color: maroon!important;
+}
+h1 {
+	font-size: 2.6rem;
+}
+#time {
+	font-size: 8rem;
+	font-weight: 500;
+	text-align: center;
+}
+#weather {
+	font-size: 1.1rem;
+	font-weight: 400;
+	text-align: center;
+	padding-top: 0;
+}
+#weather i {
+	font-size: 1.1rem;
+}
+#tado {
+	font-size: 1.1rem;
+	font-weight: 400;
+	text-align: center;
+	padding-top: 20px;
+	padding-bottom: 30px;
+}
+.button {
+	font-weight: 600 !important;
+}
+.day .button.off {
+	background-color: #CA3402;
+	color: #FFFFFF;
+}
+.day .button.off: focus, .day .button.off: hover {
+	background-color: #8D2401;
+	color: #FFFFFF;
+}
+.day .button.on {
+	background-color: #8CD425;
+	color: #fefefe;
+}
+.day .button.on: focus, .day .button.on: hover {
+	background-color: #648F28;
+	color: #fefefe;
+}
+
+
+.night .button.off {
+	background-color: #222222;
+	color: #777777;
+}
+.night .button.off: focus, .night .button.off: hover {
+	background-color: #111111;
+	color: #777777;
+}
+.night .button.on {
+	background-color: #511501;
+	color: #777777;
+}
+.night .button.on: focus, .night .button.on: hover {
+	background-color: #280A00;
+	color: #777777;
+}
