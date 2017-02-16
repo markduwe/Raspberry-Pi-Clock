@@ -36,5 +36,20 @@ The documentation should walk you through how to use this. I use the ambilight s
 The API does not work if the TV if off or on standby, so you could use that instead.  
 
 ### Lastly
-The screen changes colour from white to black (with red text) between the hours of 10pm-7am. This is changeable in display.js.  
+This runs on Firefox in kiosk mode. You can find tutorials on the web about how to get the pi to boot into a browser running a local file in kiosk mode with no cursor and turning off screen blanking.
+The screen changes colour from white to black (with red text) between the hours of 10pm-7am. This is changeable or removeable in display.js.  
 At some point, I might also add a control to turn the heating up/down with tadoº.  
+I'd also reduce the screen brightness, especially for nighttime - if you're using it as a bedside clock like me.  
+After some trial and error, I found this works well for me:
+
+* SSH into the pi
+* sudo nano /sys/class/backlight/rpi_backlight/brightness
+* set brightness to 12 (readable during the day and not too bright at night)
+
+I'm using this touchscreen: https://www.modmypi.com/raspberry-pi/screens-and-displays/raspberry-pi-7-touchscreen-display-official and https://www.modmypi.com/raspberry-pi/cases/7-touchscreen-cases/raspberry-pi-7-touchscreen-display-case-black, so you'll also have to rotate the screen 180º -
+
+* SSH into the pi
+* sudo nano /boot/config.txt
+* add lcd_rotate=2 to the file
+* save and reboot
+
