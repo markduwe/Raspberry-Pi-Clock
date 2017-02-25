@@ -14,46 +14,38 @@ var group0onoff = 'YOURHUEBRIDGEIP/api/YOURHUEUSERID/groups/0/action', // this s
 
 $(function() {
 
-	// load weather, tado and set date
 	weather();
 	tadoStuff();
 	$('#date').html(moment().format('dddd, MMMM Do, YYYY'));
 
-	window.addEventListener('contextmenu', function(e) { e.preventDefault(); }); // stop accidental contect menus
+	window.addEventListener('contextmenu', function(e) { e.preventDefault(); })
 
-	// update lights and TV state every 5 seconds
 	setInterval( function() {
 
-		// check lights states
 		$.getJSON(group0state, function(all){
 
 			$.getJSON(bedstate, function(bed){
 
-				// all lights on
 				if(all.state.all_on == true && all.state.any_on == true && bed.state.all_on == true && bed.state.any_on == true) {
 					$('button:not(#tvoff)').removeClass('on');
 					$('#allon').addClass('on');
 					$('#bedon').addClass('on');
 				}
-				// most lights on
 				if(all.state.all_on == false && all.state.any_on == true && bed.state.all_on == true && bed.state.any_on == true) {
 					$('button:not(#tvoff)').removeClass('on');
 					$('#allon').addClass('on');
 					$('#bedon').addClass('on');
 				}
-				// most lights on
 				if(all.state.all_on == false && all.state.any_on == true && bed.state.all_on == false && bed.state.any_on == true) {
 					$('button:not(#tvoff)').removeClass('on');
 					$('#allon').addClass('on');
 					$('#bedon').addClass('on');
 				}
-				// bedroom off, but others on
 				if(all.state.all_on == false && all.state.any_on == true && bed.state.all_on == false && bed.state.any_on == false) {
 					$('button:not(#tvoff)').removeClass('on');
 					$('#bedoff').addClass('on');
 					$('#allon').addClass('on');
 				}
-				// all lights off
 				if(all.state.all_on == false && all.state.any_on == false) {
 					$('button:not(#tvoff)').removeClass('on');
 					$('#alloff').addClass('on');
@@ -63,10 +55,8 @@ $(function() {
 
 		});
 
-		// check TV state
 		$.getJSON(tvon, function(data){
 
-			// if ambilight has data, TV is on
 			if(exists(data.layer1)) {
 				$('#tvoff').addClass('on');
 			} else {
@@ -77,7 +67,6 @@ $(function() {
 
 	}, 5000);
 
-	// reload weather and tado data every hour
 	setInterval( function() {
 
 		tadoStuff();
@@ -86,70 +75,66 @@ $(function() {
 
 	}, 3600000);
 
-	// make the buttons do stuff
 	$('#allon').on('click', function(){
 		$.ajax({
-		    type: 'PUT',
-		    url: group0onoff,
-		    data: '{"on": true, "bri": 100}'
+			type: 'PUT',
+			url: group0onoff,
+			data: '{"on": true, "bri": 100}'
 		});
 	});
 
 	$('#alloff').on('click', function(){
 		$.ajax({
-		    type: 'PUT',
-		    url: group0onoff,
-		    data: '{"on": false}'
+			type: 'PUT',
+			url: group0onoff,
+			data: '{"on": false}'
 		});
 	});
 
 	$('#bedon').on('click', function(){
 		$.ajax({
-		    type: 'PUT',
-		    url: bedonoff,
-		    data: '{"on": true, "bri": 100, "hue":65280}'
+			type: 'PUT',
+			url: bedonoff,
+			data: '{"on": true, "bri": 100, "hue":65280}'
 		});
 
 	});
 
 	$('#bedoff').on('click', function(){
 		$.ajax({
-		    type: 'PUT',
-		    url: bedonoff,
-		    data: '{"on": false}'
+			type: 'PUT',
+			url: bedonoff,
+			data: '{"on": false}'
 		});
 		$.ajax({
-		    type: 'PUT',
-		    url: api+'3/state',
-		    data: '{"on": false}'
+			type: 'PUT',
+			url: api+'3/state',
+			data: '{"on": false}'
 		});
 	});
 
 	$('#tvoff').on('click', function(){
 		$(this).removeClass('on');
 		$.ajax({
-		    type: 'POST',
-		    dataType: 'json',
-		    url: tv,
-		    data: '{"key": "Standby"}'
+			type: 'POST',
+			dataType: 'json',
+			url: tv,
+			data: '{"key": "Standby"}'
 		});
 	});
 
-	// update date every 10 minutes
 	setInterval( function() {
 		$('#date').html(moment().format('dddd, MMMM Do, YYYY'));
-	}, 600000);
+	}, 100000);
 
-	// update time every second
 	setInterval( function() {
-		$('#time').html(moment().format('HH:mm')).attr('datetime', moment().format('HHmm'));
+		$('#time').html(moment().format('HH:mm')).attr('datetime', moment().format('HHmm')).append('<span>'+moment().format('dddd Do MMMM, YYYY')+'</span>');
 		daynight();
 	}, 1000);
 
 
 });
 
-// turns the screen dark between 10pm and 7am
 function daynight() {
 	if($('#time').attr('datetime') > '0700' && $('#time').attr('datetime') < '2200') {
 		$('body').removeClass('night').addClass('day');
@@ -158,7 +143,6 @@ function daynight() {
 	}
 }
 
-// gets tado data
 function tadoStuff() {
 	$.getJSON(tado, function(data){
 		var current = data.sensorDataPoints.insideTemperature.celsius;
@@ -166,7 +150,6 @@ function tadoStuff() {
 	});
 }
 
-// gets weather data (seriously needs cleaning up and work)
 function weather() {
 
 	$.getJSON(weatherData, function(weather){
@@ -241,7 +224,6 @@ function weather() {
 
 }
 
-// helper
 function exists(data) {
 
 	if(!data || data==null || data=='undefined' || typeof(data)=='undefined') return false;
@@ -249,7 +231,6 @@ function exists(data) {
 
 }
 
-// works out cardinal compass directions
 function degToCompass(num) {
 
 	var val = Math.floor((num / 22.5) + 0.5);
