@@ -1,0 +1,50 @@
+* {
+	font-family: 'Roboto';
+}
+body {
+	width: 790px;
+	height: 470px;
+	margin: 0 auto;
+	-webkit-transition: all linear 30s;
+	-moz-transition: all linear 30s;
+	transition: all linear 30s;
+}
+body.day {
+	background: #fff !important;
+	color: #111 !important;
+}
+body.night {
+	background: #000 !important;
+	color: #660000 !important;
+}
+.columns {
+	text-align: center;
+}
+h1#time {
+	font-size: 8rem;
+	font-weight: 900;
+	margin: 0;
+	line-height: 1;
+}
+h1#time span {
+	font-size: 1.5rem;
+	font-weight: 300;
+	display: block;
+}
+#weather {
+	font-size: 1.1rem;
+	padding-top: 2em;
+	padding-bottom: 0;
+}
+#tado {
+	padding-top: 1em;
+	padding-bottom: 2em;
+}
+.night .button.alert {
+	color: #660000;
+	border-color: #660000;
+}
+.night .button.success {
+	color: #005200;
+	border-color: #005200;
+}
