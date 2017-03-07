@@ -1,13 +1,25 @@
 * {
-	font-family: 'Roboto';
+	box-sizing: border-box;
 }
 body {
-	width: 790px;
-	height: 470px;
+	font-family: 'Lato';
+	font-weight: 400;
+	width: 800px;
+	height: 480px;
+	overflow: hidden;
 	margin: 0 auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 	-webkit-transition: all linear 30s;
 	-moz-transition: all linear 30s;
 	transition: all linear 30s;
+}
+h1, h2, h3, h4, h5, h6, p, dl, dl dt, dl dd {
+	font-family: 'Lato';
+	font-weight: 400;
+}
+h1, h2, h3, h4, h5, h6, dl dt, dl dd {
+	font-weight: 900;
 }
 body.day {
 	background: #fff !important;
@@ -20,6 +32,22 @@ body.night {
 .columns {
 	text-align: center;
 }
+.progress {
+	margin: 0.5em 0;
+	height: 1.5em;
+}
+.night .progress {
+	background: #333;
+}
+.progress-meter-text {
+	font-size: 1em;
+}
+.night .progress-meter-text {
+	color: #111;
+}
+.night .progress.alert .progress-meter {
+	background: #660000;
+}
 h1#time {
 	font-size: 8rem;
 	font-weight: 900;
@@ -28,17 +56,33 @@ h1#time {
 }
 h1#time span {
 	font-size: 1.5rem;
-	font-weight: 300;
+	font-weight: 900;
 	display: block;
 }
-#weather {
+dl {
 	font-size: 1.1rem;
-	padding-top: 2em;
-	padding-bottom: 0;
+}
+dl dt {
+	margin: 0;
+}
+dl dd {
+	font-size: 1rem;
+}
+#weather {
+	margin-bottom: 0;
+	margin-top: 1em;
 }
 #tado {
-	padding-top: 1em;
-	padding-bottom: 2em;
+	margin-bottom: 0;
+}
+#hue {
+}
+#hue img {
+	width: 16px;
+	vertical-align: baseline;
+}
+.day .button {
+	color: #fff !important;
 }
 .night .button.alert {
 	color: #660000;
