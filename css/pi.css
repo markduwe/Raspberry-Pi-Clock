@@ -35,6 +35,7 @@ body.night {
 .progress {
 	margin: 0.5em 0;
 	height: 1.5em;
+	max-width: 100%;
 }
 .night .progress {
 	background: #333;
@@ -44,6 +45,9 @@ body.night {
 }
 .night .progress-meter-text {
 	color: #111;
+}
+ .progress.alert .progress-meter {
+	max-width: 370px !important;
 }
 .night .progress.alert .progress-meter {
 	background: #660000;
@@ -67,10 +71,11 @@ dl dt {
 }
 dl dd {
 	font-size: 1rem;
+	line-height: 1.4;
 }
 #weather {
 	margin-bottom: 0;
-	margin-top: 1em;
+	margin-top: 0.8em;
 }
 #tado {
 	margin-bottom: 0;
@@ -81,14 +86,25 @@ dl dd {
 	width: 16px;
 	vertical-align: baseline;
 }
+.button.off {
+	background-color:#c60f13;
+	color:#fefefe;
+}
+.button.on {
+	background-color:#5da423;
+	color:#0a0a0a;
+}
 .day .button {
 	color: #fff !important;
 }
-.night .button.alert {
+.night .button {
+	background: transparent;
+}
+.night .button.off {
 	color: #660000;
 	border-color: #660000;
 }
-.night .button.success {
+.night .button.on {
 	color: #005200;
 	border-color: #005200;
 }

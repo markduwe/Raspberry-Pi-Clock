@@ -2,7 +2,7 @@ $(function() {
 
 	pi.init();
 
-	$('.button-group').on('click', '#all.alert', function(){
+	$('.button-group').on('click', '#all.off', function(){
 		$.ajax({
 			type: 'PUT',
 			url: urls.group0onoff,
@@ -10,7 +10,7 @@ $(function() {
 		});
 	});
 
-	$('.button-group').on('click', '#all.alert.success', function(){
+	$('.button-group').on('click', '#all.on', function(){
 		$.ajax({
 			type: 'PUT',
 			url: urls.group0onoff,
@@ -18,7 +18,7 @@ $(function() {
 		});
 	});
 
-	$('.button-group').on('click', '#bed.alert', function(){
+	$('.button-group').on('click', '#bed.off', function(){
 		$.ajax({
 			type: 'PUT',
 			url: urls.bedonoff,
@@ -27,7 +27,7 @@ $(function() {
 
 	});
 
-	$('.button-group').on('click', '#bed.alert.success', function(){
+	$('.button-group').on('click', '#bed.on', function(){
 		$.ajax({
 			type: 'PUT',
 			url: urls.bedonoff,
@@ -41,7 +41,7 @@ $(function() {
 	});
 
 	$('#tv').on('click', function(){
-		$(this).removeClass('success');
+		$(this).removeClass('on');
 		$.ajax({
 			type: 'POST',
 			dataType: 'json',
@@ -51,18 +51,19 @@ $(function() {
 	});
 
 });
+
 var urls = {
-	'api':			'http://HUEBRIDGEIP/api/HUEUSERID/lights/',
-	'group0onoff':	'http://HUEBRIDGEIP/api/HUEUSERID/groups/0/action',
-	'group0state':	'http://HUEBRIDGEIP/api/HUEUSERID/groups/0/',
-	'sensor':		'http://HUEBRIDGEIP/api/HUEUSERID/sensors/SENSORID',
-	'bedonoff':		'http://HUEBRIDGEIP/api/HUEUSERID/groups/6/action',
-	'bedstate':		'http://HUEBRIDGEIP/api/HUEUSERID/groups/6/',
-	'tado':			'https://my.tado.com/api/v2/homes/HOMEID/zones/1/state?username=USERNAME&password=PASSWORD',
-	'tv':			'http://TVIP:1925/1/input/key',
-	'watchtv':		'http://TVIP:1925/1/sources/current',
-	'tvon':			'http://TVIP:1925/1/ambilight/measured',
-	'weatherData':	'https://api.darksky.net/forecast/DARKSKYAPIID/YOURLATITUDE,YOURLONGITUDE?units=UNITS&callback=?'
+	'api':			'http://192.168.0.11/api/pvr-XyY8lVnD85i8-JFiipXchGHGjmFWGKYvfSeG/lights/',
+	'group0onoff':	'http://192.168.0.11/api/pvr-XyY8lVnD85i8-JFiipXchGHGjmFWGKYvfSeG/groups/0/action',
+	'group0state':	'http://192.168.0.11/api/pvr-XyY8lVnD85i8-JFiipXchGHGjmFWGKYvfSeG/groups/0/',
+	'sensor':		'http://192.168.0.11/api/pvr-XyY8lVnD85i8-JFiipXchGHGjmFWGKYvfSeG/sensors/22',
+	'bedonoff':		'http://192.168.0.11/api/pvr-XyY8lVnD85i8-JFiipXchGHGjmFWGKYvfSeG/groups/6/action',
+	'bedstate':		'http://192.168.0.11/api/pvr-XyY8lVnD85i8-JFiipXchGHGjmFWGKYvfSeG/groups/6/',
+	'tado':			'https://my.tado.com/api/v2/homes/3563/zones/1/state?username=PuffyWinter&password=PpELzF7L',
+	'tv':			'http://192.168.0.19:1925/1/input/key',
+	'watchtv':		'http://192.168.0.19:1925/1/sources/current',
+	'tvon':			'http://192.168.0.19:1925/1/ambilight/measured',
+	'weatherData':	'https://api.darksky.net/forecast/dabf11a8e6fbff1e4f49535a8d9ac5c0/51.47809480343498,0.015261877536702015?units=uk2&callback=?'
 }
 var moons = {
 	'new':		'<i class="wi wi-moon-alt-new"></i> New Moon',
@@ -129,12 +130,11 @@ var pi = {
 	},
 	tvstatus: function() {
 		$.getJSON(urls.watchtv, function(data){
-			if(exists(data.id)) {
-				$('#tv').addClass('success');
-			} else {
-				$('#tv').removeClass('success');
-			}
 
+		}).done(function() {
+			$('#tv').addClass('on');
+		}).fail(function() {
+			$('#tv').removeClass('on');
 		});
 	},
 	weather: function() {
@@ -151,14 +151,18 @@ var pi = {
 				moonPhase = '';
 			if(summaryIcon == 'clear-day') {summaryIcon = 'wi-day-sunny'};
 			if(summaryIcon == 'clear-night') {summaryIcon = 'wi-night-clear'};
-			if(summaryIcon == 'wind') {summaryIcon = 'strong-wind'};
-			if(summaryIcon == 'rain') {summaryIcon = 'wi-rain'};
+			if(summaryIcon == 'rain' && $('body').hasClass('day')) {summaryIcon = 'wi-day-showers'};
+			if(summaryIcon == 'rain' && $('body').hasClass('night')) {summaryIcon = 'wi-night-alt-showers'};
 			if(summaryIcon == 'snow') {summaryIcon = 'wi-snow'};
 			if(summaryIcon == 'sleet') {summaryIcon = 'wi-sleet'};
+			if(summaryIcon == 'wind') {summaryIcon = 'wi-strong-wind'};
 			if(summaryIcon == 'fog') {summaryIcon = 'wi-fog'};
 			if(summaryIcon == 'cloudy') {summaryIcon = 'wi-cloudy'};
-			if(summaryIcon == 'partly-cloudy-day') {summaryIcon = 'wi-day-cloudy'};
-			if(summaryIcon == 'partly-cloudy-night') {summaryIcon = 'night-alt-partly-cloudy'};
+			if(summaryIcon == 'partly-cloudy-day') {summaryIcon = 'wi-day-cloudy-high'};
+			if(summaryIcon == 'partly-cloudy-night') {summaryIcon = 'wi-night-alt-cloudy'};
+			if(summaryIcon == 'hail') {summaryIcon = 'wi-day-hail'};
+			if(summaryIcon == 'thunderstorm') {summaryIcon = 'wi-thunderstorm'};
+			if(summaryIcon == 'tornado') {summaryIcon = 'wi-tornado'};
 			if(num == 0) {var text = 'Clear', cIcon = 'wi-clear-day'};
 			if(num > 0 && num <= 0.4) {var text = 'Scattered Clouds', cIcon = 'wi-day-cloudy-high'};
 			if(num >= 0.41 && num <= 0.75) {var text = 'Broken Clouds', cIcon = 'wi-cloudy'};
@@ -205,7 +209,7 @@ var pi = {
 			if(weather.currently.precipIntensity > 0) {
 				pred += '<dt><i class="wi wi-rain"></i> Rain: '+Math.round(weather.currently.precipProbability * 100, 2)+'% '+Math.round(weather.currently.precipIntensity * 10, 2)+'mm/hr '+weather.currently.precipType+'</dt>';
 			} else {
-				pred += '<dt><i class="wi wi-rain"></i> Rain: '+Math.round(weather.currently.precipProbability * 100, 2)+'%</dt>';
+				pred += '<dt><i class="wi wi-umbrella"></i> Rain: '+Math.round(weather.currently.precipProbability * 100, 2)+'%</dt>';
 			}
 
 			if(weather.currently.nearestStormDistance > 0) {
@@ -244,26 +248,26 @@ var pi = {
 			$.getJSON(urls.bedstate, function(bed){
 
 				if(all.state.all_on == true && all.state.any_on == true && bed.state.all_on == true && bed.state.any_on == true) {
-					$('#all').addClass('success');
-					$('#bed').addClass('success');
+					$('#all').addClass('on');
+					$('#bed').addClass('on');
 				}
 				if(all.state.all_on == false && all.state.any_on == true && bed.state.all_on == true && bed.state.any_on == true) {
-					$('#all').addClass('success');
-					$('#bed').addClass('success');
+					$('#all').addClass('on');
+					$('#bed').addClass('on');
 				}
 				if(all.state.all_on == false && all.state.any_on == true && bed.state.all_on == false && bed.state.any_on == true) {
-					$('#all').addClass('success');
-					$('#bed').addClass('success');
+					$('#all').addClass('on');
+					$('#bed').addClass('on');
 				}
 				if(all.state.all_on == false && all.state.any_on == true && bed.state.all_on == false && bed.state.any_on == false) {
-					$('#bed').removeClass('success');
-					$('#all').addClass('success');
+					$('#bed').removeClass('on');
+					$('#all').addClass('on');
 				}
 				if(all.state.all_on == false && all.state.any_on == false) {
-					$('#all').removeClass('success');
+					$('#all').removeClass('on');
 				}
 				if(bed.state.all_on == false && bed.state.any_on == false) {
-					$('#bed').removeClass('success');
+					$('#bed').removeClass('on');
 				}
 
 			});
