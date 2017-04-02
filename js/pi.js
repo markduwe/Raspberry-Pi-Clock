@@ -53,17 +53,17 @@ $(function() {
 });
 
 var urls = {
-	'api':			'http://192.168.0.11/api/pvr-XyY8lVnD85i8-JFiipXchGHGjmFWGKYvfSeG/lights/',
-	'group0onoff':	'http://192.168.0.11/api/pvr-XyY8lVnD85i8-JFiipXchGHGjmFWGKYvfSeG/groups/0/action',
-	'group0state':	'http://192.168.0.11/api/pvr-XyY8lVnD85i8-JFiipXchGHGjmFWGKYvfSeG/groups/0/',
-	'sensor':		'http://192.168.0.11/api/pvr-XyY8lVnD85i8-JFiipXchGHGjmFWGKYvfSeG/sensors/22',
-	'bedonoff':		'http://192.168.0.11/api/pvr-XyY8lVnD85i8-JFiipXchGHGjmFWGKYvfSeG/groups/6/action',
-	'bedstate':		'http://192.168.0.11/api/pvr-XyY8lVnD85i8-JFiipXchGHGjmFWGKYvfSeG/groups/6/',
-	'tado':			'https://my.tado.com/api/v2/homes/3563/zones/1/state?username=PuffyWinter&password=PpELzF7L',
-	'tv':			'http://192.168.0.19:1925/1/input/key',
-	'watchtv':		'http://192.168.0.19:1925/1/sources/current',
-	'tvon':			'http://192.168.0.19:1925/1/ambilight/measured',
-	'weatherData':	'https://api.darksky.net/forecast/dabf11a8e6fbff1e4f49535a8d9ac5c0/51.47809480343498,0.015261877536702015?units=uk2&callback=?'
+	'api':			'http://[HUEIP]/api/[HUEUSER]/lights/',
+	'group0onoff':	'http://[HUEIP]/api/[HUEUSER]/groups/0/action',
+	'group0state':	'http://[HUEIP]/api/[HUEUSER]/groups/0/',
+	'sensor':		'http://[HUEIP]/api/[HUEUSER]/sensors/22',
+	'bedonoff':		'http://[HUEIP]/api/[HUEUSER]/groups/6/action',
+	'bedstate':		'http://[HUEIP]/api/[HUEUSER]/groups/6/',
+	'tado':			'https://my.tado.com/api/v2/homes/[HOMEID]/zones/1/state?username=[USERNAME]&password=[PASSWORD]',
+	'tv':			'http://[TVIP]:1925/1/input/key',
+	'watchtv':		'http://[TVIP]:1925/1/sources/current',
+	'tvon':			'http://[TVIP]:1925/1/ambilight/measured',
+	'weatherData':	'https://api.darksky.net/forecast/[YOURKEY]/[YOURLATITUDE],[YOURLONGITUDE]?units=uk2&callback=?'
 }
 var moons = {
 	'new':		'<i class="wi wi-moon-alt-new"></i> New Moon',
