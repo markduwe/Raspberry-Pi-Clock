@@ -120,7 +120,7 @@ var pi = {
 		}, 1000);
 	},
 	daynight: function() {
-		if($('#time').attr('datetime') > moment.unix(sunrise).format('HHMM') && $('#time').attr('datetime') < moment.unix(sunset).format('HHMM')) {
+		if($('#time').attr('datetime') > '0700' && $('#time').attr('datetime') < '2200') {
 			$('body').removeClass('night').addClass('day');
 			$('.button').removeClass('hollow');
 		} else {
@@ -225,7 +225,7 @@ var pi = {
 			pred += '<dt><i class="wi wi-sunrise"></i> '+moment.unix(sunrise).format('HH:mm a')+' | <i class="wi wi-sunset"></i> '+moment.unix(sunset).format('HH:mm a')+'</dt>';
 
                         pred += '<small><dt>weather data <i class="wi wi-time-3"></i> '+moment.unix(weather.currently.time).format('h:mm a')+'</small></dt>';
-			
+
 			$('#weather').html(pred);
 
 		});
