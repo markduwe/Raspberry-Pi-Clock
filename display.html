@@ -2,40 +2,38 @@
 <html lang="en-GB">
 <head>
 <meta charset="utf-8">
-<title>pi clock</title>
-<meta name="viewport" content="width=800, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,900">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title></title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/1.8.36/css/materialdesignicons.min.css" />
 <link rel="stylesheet" type="text/css" href="css/weather-icons-wind.css" />
 <link rel="stylesheet" type="text/css" href="css/weather-icons.css" />
-<link rel="stylesheet" type="text/css" href="css/foundation.min.css" />
-<link rel="stylesheet" type="text/css" href="css/pi.css" />
 <link rel="stylesheet" type="text/css" href="css/icons.css" />
+<link rel="stylesheet" type="text/css" href="css/prydonian.css" />
 </head>
 <body>
 
-<div class="row align-middle">
-	<div class="columns">
-		<dl id="weather"></dl>
-		<dl id="tado"></dl>
-		<dl id="hue"></dl>
+	<div id="container">
+		<section class="column">
+			<dl id="weather"></dl>
+			<dl id="tado"></dl>
+			<dl id="hue"></dl>
+		</section>
+		<section class="column" id="clock">
+			<h1 id="time"></h1>
+		</section>
 	</div>
-	<div class="columns">
-		<h1 id="time" datetime=""></h1>
+	<div id="buttons">
+		<section class="group">
+			<button id="tv" class="button big"><i class="mdi mdi-television"></i></button>
+			<button id="bed" class="button big"><i class="mdi mdi-hotel"></i></button>
+			<button id="all" class="button big"><i class="mdi mdi-home-variant"></i></button>
+		</section>
 	</div>
-</div>
-<div class="row">
-	<div class="small-12 columns">
-		<div class="expanded large button-group">
-			<button id="tv" class="button off"><i class="mdi mdi-television"></i></button>
-			<button id="bed" class="button off"><i class="mdi mdi-hotel"></i></button>
-			<button id="all" class="button off"><i class="mdi mdi-home-variant"></i></button>
-		</div>
-	</div>
-</div>
+
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
-<script src="js/skyicons.js"></script>
 <script src="js/pi.js"></script>
 </body>
 </html>

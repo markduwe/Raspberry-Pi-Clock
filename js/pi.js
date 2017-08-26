@@ -2,7 +2,7 @@ $(function() {
 
 	pi.init();
 
-	$('.button-group').on('click', '#all.off', function(){
+	$('#buttons').on('click', '#all.alert', function(){
 		$.ajax({
 			type: 'PUT',
 			url: urls.group0onoff,
@@ -10,7 +10,7 @@ $(function() {
 		});
 	});
 
-	$('.button-group').on('click', '#all.on', function(){
+	$('#buttons').on('click', '#all.primary', function(){
 		$.ajax({
 			type: 'PUT',
 			url: urls.group0onoff,
@@ -18,7 +18,7 @@ $(function() {
 		});
 	});
 
-	$('.button-group').on('click', '#bed.off', function(){
+	$('#buttons').on('click', '#bed.alert', function(){
 		$.ajax({
 			type: 'PUT',
 			url: urls.bedonoff,
@@ -27,7 +27,7 @@ $(function() {
 
 	});
 
-	$('.button-group').on('click', '#bed.on', function(){
+	$('#buttons').on('click', '#bed.primary', function(){
 		$.ajax({
 			type: 'PUT',
 			url: urls.bedonoff,
@@ -41,7 +41,7 @@ $(function() {
 	});
 
 	$('#tv').on('click', function(){
-		$(this).removeClass('on');
+		$(this).removeClass('primary').addClass('alert');
 		$.ajax({
 			type: 'POST',
 			dataType: 'json',
@@ -52,18 +52,24 @@ $(function() {
 
 });
 
+var where = {
+	'lat':			'[YOURLAT]',
+	'long':			'[YOURLONG]'
+}
+
 var urls = {
-	'api':			'http://[HUEIP]/api/[HUEUSER]/lights/',
-	'group0onoff':	'http://[HUEIP]/api/[HUEUSER]/groups/0/action',
-	'group0state':	'http://[HUEIP]/api/[HUEUSER]/groups/0/',
-	'sensor':		'http://[HUEIP]/api/[HUEUSER]/sensors/22',
-	'bedonoff':		'http://[HUEIP]/api/[HUEUSER]/groups/6/action',
-	'bedstate':		'http://[HUEIP]/api/[HUEUSER]/groups/6/',
-	'tado':			'https://my.tado.com/api/v2/homes/[HOMEID]/zones/1/state?username=[USERNAME]&password=[PASSWORD]',
-	'tv':			'http://[TVIP]:1925/1/input/key',
-	'watchtv':		'http://[TVIP]:1925/1/sources/current',
-	'tvon':			'http://[TVIP]:1925/1/ambilight/measured',
-	'weatherData':	'https://api.darksky.net/forecast/[YOURKEY]/[YOURLATITUDE],[YOURLONGITUDE]?units=uk2&callback=?'
+	'api':			'http://[YOURHUEIP]/api/[YOURHUEUSER]/lights/',
+	'group0onoff':	'http://[YOURHUEIP]/api/[YOURHUEUSER]/groups/0/action',
+	'group0state':	'http://[YOURHUEIP]/api/[YOURHUEUSER]/groups/0/',
+	'sensor':		'http://[YOURHUEIP]/api/[YOURHUEUSER]/sensors/22',
+	'bedonoff':		'http://[YOURHUEIP]/api/[YOURHUEUSER]/groups/6/action',
+	'bedstate':		'http://[YOURHUEIP]/api/[YOURHUEUSER]/groups/6/',
+	'tado':			'https://my.tado.com/api/v2/homes/[YOURID]/zones/1/state?username=[USERNAME]&password=[PASSWORD]',
+	'tv':			'http://[YOURTVIP]/1/input/key',
+	'watchtv':		'http://[YOURTVIP]/1/sources/current',
+	'tvon':			'http://[YOURTVIP]/1/ambilight/measured',
+	'weatherData':	'https://api.darksky.net/forecast/[KEY]/'+where.lat+','+where.long+'?units=uk2&callback=?',
+	'sun':			'https://api.sunrise-sunset.org/json?lat='+where.lat+'&lng='+where.long+'&formatted=0&date=today&callback=?'
 }
 var moons = {
 	'new':		'<i class="wi wi-moon-alt-new"></i> New Moon',
@@ -118,23 +124,33 @@ var pi = {
 			$('#time').html(moment().format('HH:mm')).attr('datetime', moment().format('HHmm')).append('<span>'+moment().format('dddd Do MMMM, YYYY')+'</span>');
 			pi.daynight();
 		}, 1000);
+		$.getJSON(urls.sun, function(sun){
+			var sunrise = sun.results.sunrise,
+				sunset = sun.results.sunset;
+			$('#time').attr('data-sunrise', moment(sunrise).format('HHmm')).attr('data-sunset', moment(sunset).format('HHmm'));
+		});
+		setInterval( function() {
+			$.getJSON(urls.sun, function(sun){
+				var sunrise = sun.results.sunrise,
+					sunset = sun.results.sunset;
+				$('#time').attr('data-sunrise', moment(sunrise).format('HHmm')).attr('data-sunset', moment(sunset).format('HHmm'));
+			});
+		}, 21600);
 	},
 	daynight: function() {
-		if($('#time').attr('datetime') > '0700' && $('#time').attr('datetime') < '2200') {
+		if($('#time').attr('datetime') > $('#time').data('sunrise') && $('#time').attr('datetime') < $('#time').data('sunset')) {
 			$('body').removeClass('night').addClass('day');
-			$('.button').removeClass('hollow');
 		} else {
 			$('body').removeClass('day').addClass('night');
-			$('.button').addClass('hollow');
 		}
 	},
 	tvstatus: function() {
 		$.getJSON(urls.watchtv, function(data){
 
 		}).done(function() {
-			$('#tv').addClass('on');
+			$('#tv').addClass('primary').removeClass('alert');
 		}).fail(function() {
-			$('#tv').removeClass('on');
+			$('#tv').removeClass('primary').addClass('alert');
 		});
 	},
 	weather: function() {
@@ -149,6 +165,7 @@ var pi = {
 				now = weather.hourly.summary,
 				pred = '',
 				moonPhase = '';
+			if(summaryIcon == 'rain') {summaryIcon = 'wi-rain'};
 			if(summaryIcon == 'clear-day') {summaryIcon = 'wi-day-sunny'};
 			if(summaryIcon == 'clear-night') {summaryIcon = 'wi-night-clear'};
 			if(summaryIcon == 'rain' && $('body').hasClass('day')) {summaryIcon = 'wi-day-showers'};
@@ -233,13 +250,13 @@ var pi = {
 	tado: function() {
 		$.getJSON(urls.tado, function(data){
 			var current = data.sensorDataPoints.insideTemperature.celsius,
-				setto = data.setting.temperature.celsius,
+				setto = 35,
 				tpercentage = (current / setto)*100;
-			$('#tado').html('<dt><div id="tadop" class="progress alert" role="progressbar" tabindex="0" data-set="'+setto+'"><span class="progress-meter" style="width: '+tpercentage+'%"><p class="progress-meter-text"><i class="wi wi-barometer"></i> tado&deg; ' + current + '<i class="wi wi-celsius"></i></p></span></div></dt>');
+			$('#tado').html('<dt><div id="tadop" class="progress" role="progressbar" tabindex="0" data-set="'+setto+'"><div class="progress-value medium alert" style="width: '+tpercentage+'%"><i class="wi wi-barometer"></i> tado&deg; ' + current + '<i class="wi wi-celsius"></i></span></div></dt>');
 			$.getJSON(urls.sensor, function(data){
 				var motion = parseFloat(data.state.temperature) / 100,
 					hpercentage = (motion / setto)*100;
-				$('#hue').html('<dt><div class="progress alert" role="progressbar" tabindex="0"><span class="progress-meter" style="width: '+hpercentage+'%"><p class="progress-meter-text"><i class="hue-SML001"></i> '+ motion.toFixed(2) + '<i class="wi wi-celsius"></i></p></span></div></dt>');
+				$('#hue').html('<dt><div class="progress" role="progressbar" tabindex="0"><div class="progress-value medium alert" style="width: '+hpercentage+'%"><i class="hue-SML001"></i> '+ motion.toFixed(2) + '<i class="wi wi-celsius"></i></span></div></dt>');
 			});
 
 		});
@@ -250,26 +267,26 @@ var pi = {
 			$.getJSON(urls.bedstate, function(bed){
 
 				if(all.state.all_on == true && all.state.any_on == true && bed.state.all_on == true && bed.state.any_on == true) {
-					$('#all').addClass('on');
-					$('#bed').addClass('on');
+					$('#all').addClass('primary').removeClass('alert');
+					$('#bed').addClass('primary').removeClass('alert');
 				}
 				if(all.state.all_on == false && all.state.any_on == true && bed.state.all_on == true && bed.state.any_on == true) {
-					$('#all').addClass('on');
-					$('#bed').addClass('on');
+					$('#all').addClass('primary').removeClass('alert');
+					$('#bed').addClass('primary').removeClass('alert');
 				}
 				if(all.state.all_on == false && all.state.any_on == true && bed.state.all_on == false && bed.state.any_on == true) {
-					$('#all').addClass('on');
-					$('#bed').addClass('on');
+					$('#all').addClass('primary').removeClass('alert');
+					$('#bed').addClass('primary').removeClass('alert');
 				}
 				if(all.state.all_on == false && all.state.any_on == true && bed.state.all_on == false && bed.state.any_on == false) {
-					$('#bed').removeClass('on');
-					$('#all').addClass('on');
+					$('#bed').removeClass('primary').addClass('alert');
+					$('#all').addClass('primary').removeClass('alert');
 				}
 				if(all.state.all_on == false && all.state.any_on == false) {
-					$('#all').removeClass('on');
+					$('#all').removeClass('primary').addClass('alert');
 				}
 				if(bed.state.all_on == false && bed.state.any_on == false) {
-					$('#bed').removeClass('on');
+					$('#bed').removeClass('primary').addClass('alert');
 				}
 
 			});
