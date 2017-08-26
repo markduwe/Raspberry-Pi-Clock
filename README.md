@@ -38,7 +38,7 @@ The API does not work if the TV if off or on standby, so you could use that inst
 ### Lastly
 This runs on Firefox in kiosk mode. You can find tutorials on the web about how to get the pi to boot into a browser running a local file in kiosk mode with no cursor and turning off screen blanking.  
 
-The screen changes colour from white to black (with red text) between the hours of 10pm-7am. This is changeable or removeable in display.js.  
+The screen changes colour from white to black (with red text) between the hours of 10pm-7am. This is changeable or removeable in pi.js.  
 
 At some point, I might also add a control to turn the heating up/down with tadoº.  
 
