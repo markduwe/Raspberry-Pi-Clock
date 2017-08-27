@@ -8,7 +8,7 @@
 	--font-system: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 	--font-monospace: Consolas, "Lucida Console", "DejaVu Sans Mono", Monaco, "Courier New", Courier, monospace;
 	--font-base: 62.5%;
-	--font-regular: 1.6rem;
+	--font-regular: 1.8rem;
 	--font-mono: 1.5rem;
 	--font-large: 2rem;
 	--font-xlarge: 2.6rem;
@@ -39,12 +39,12 @@
 	--color-maroon: #660000;
 	--color-fuchsia: #F012BE;
 	--color-purple: #B10DC9;
-	--color-maroon: #85144B;
 	--color-white: #FFFFFF;
 	--color-silver: #DDDDDD;
 	--color-grey: #AAAAAA;
-	--color-black: #111111;
+	--color-black: #000000;
 	--color-dark: #666666;
+	--color-verydark: #333333;
 	--color-white: #FFFFFF;
 	--text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
 
@@ -851,7 +851,7 @@ table.hover tbody tr:hover td {
 
 #container {
 	display: flex;
-	padding: 2vw;
+	padding: 1.25vh 2vw;
 	margin: 0 auto;
 }
 .column {
@@ -871,7 +871,7 @@ h1 span {
 #buttons .group {
 	width: 100%;
 	display: flex;
-	padding: var(--pm-large);
+	padding: 1.25vh 2vw;
 	text-align: center;
 	margin: 0;
 }
@@ -886,11 +886,11 @@ h1 span {
 	color: var(--color-maroon);
 }
 .night .progress {
-	background: var(--color-dark);
+	background: var(--color-verydark);
 }
 .night .progress .alert {
 	background: var(--color-maroon);
-	color: var(--color-black);
+	color: var(--color-dark);
 }
 .night .button.primary {
 	background-color: transparent !important;
